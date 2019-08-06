@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "esnext",
+    "isolatedModules": false,
+    "noEmit": false,
+    "lib": [
+      "es5","es6","dom","dom.iterable","esnext","es2018","esnext.asynciterable"
+    ]
+  },
+  "include": ["server/**/*.ts"]
+}
