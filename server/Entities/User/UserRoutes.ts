@@ -9,7 +9,7 @@ import {
   userDetail,
   userEdit,
   userForgotPassword
-} from './UserControllers';
+} from './UserActions';
 
 
 export default function makeRoutes(viewProvider) {

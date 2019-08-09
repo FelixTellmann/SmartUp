@@ -4,7 +4,8 @@ import * as passport from 'passport';
 interface userMethodDependencies {
   passport?,
   User?: any,
-  database?
+  database?,
+  mailer?
 }
 
 const User = {
@@ -22,7 +23,7 @@ const User = {
   }
 };
 
-export default function makeUserControllers({ passport, User: { makeUser, validateUser }, database, mailer }: userMethodDependencies) {
+function makeUserControllers({ passport, User: { makeUser, validateUser }, database, mailer }: userMethodDependencies) {
   return Object.freeze({
     isNotAuth,
     isAuth,
@@ -47,14 +48,29 @@ export default function makeUserControllers({ passport, User: { makeUser, valida
   }
   
   async function userRegister(req: Request, res: Response, next: NextFunction) {
-    try {
-      const user = makeUser(req.body.parts);
-      database.checkDuplicates(user);
-      database.storeUser(user);
-      mailer.sendEmailConfirmation(user);
-    } catch (err) {
-      res.status(400).send(err);
-    }
+    /*============================================================================
+      #Data - Input
+        - User = email, passsword, user_access_level?, company_id? employee_id?
+        - User model with minimum information
+      #Data - Output
+        - User model with all information (some taken as default if not given)
+          - activation_status: false
+          - email_token & valid_until - 2 days?
+          - Generated Link to activate email address
+          
+      1. System validates data
+      2. System saves data
+      3. System send out request for email confirmation
+    ==============================================================================*/
+    /* try {
+       const user = makeUser(req.body.parts);
+       User.checkUser(user);
+       database.checkDuplicates(user);
+       database.storeUser(user);
+       mailer.sendEmailConfirmation(user);
+     } catch (err) {
+       res.status(400).send(err);
+     }*/
   }
   
   async function userConfirmAccount(req: Request, res: Response, next: NextFunction) {
@@ -88,7 +104,14 @@ export default function makeUserControllers({ passport, User: { makeUser, valida
   }
 }
 
-export const { isNotAuth, isAuth, userRegister, userLogin, userLogout, userDetail, userEdit, userForgotPassword } = makeUserControllers({
-  passport,
-  User
-});
+export const {
+  isNotAuth,
+  isAuth,
+  userRegister,
+  userLogin,
+  userLogout,
+  userDetail,
+  userEdit,
+  userForgotPassword,
+  userConfirmAccount
+} = makeUserControllers({ passport, User });
