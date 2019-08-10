@@ -1,9 +1,10 @@
-function validateUser(user) {
-  const { id, email, password } = user;
-  return { id, email, password };
-}
+import User from './User.ts';
 
-test('is user a valid user', () => {
-  const userData = validateUser({ id: 12, email: 'felix@tellmann.co.za', password: 'asdasd' });
-  expect(userData).toStrictEqual({ id: 12, email: 'felix@tellmann.co.za', password: 'asdasd' })
+describe('', () => {
+  it('should have a valid email address', () => {
+    expect(User({ email: 'felix@tellmann.' })).toThrowError('felix@tellmann. is not a valid Email Address.');
+  });
+  it('should have a valid email address', () => {
+    expect(User({ email: 'felix@tellmann.co.za' })).toMatchObject({ email: 'felix@tellmann.co.za' });
+  });
 });
