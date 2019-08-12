@@ -21,6 +21,4 @@ export const session = expressSession({
   saveUninitialized: true
 });
 
-export const { query } = database;
-
 export default database;

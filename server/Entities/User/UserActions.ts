@@ -1,29 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
+import bcrypt from 'bcrypt';
+import makeUser from './User';
+import nodemailer from 'nodemailer';
+import { readUser, createUser, updateUser, deleteUser } from './UserDatabaseActions';
+
+
 import * as passport from 'passport';
 
 interface userMethodDependencies {
   passport?,
-  User?: any,
+  makeUser?: any,
   database?,
   mailer?
 }
 
-const User = {
-  makeUser(parts) {
-    return {
-      name: 'test',
-      passpord: 'hashed stuff'
-    };
-  },
-  validateUser(email_confirmation_token) {
-    return {
-      name: 'test',
-      passpord: 'hashed stuff'
-    };
-  }
-};
 
-function makeUserControllers({ passport, User: { makeUser, validateUser }, database, mailer }: userMethodDependencies) {
+function makeUserControllers({ passport, makeUser, database, mailer }: userMethodDependencies) {
   return Object.freeze({
     isNotAuth,
     isAuth,
@@ -36,18 +28,18 @@ function makeUserControllers({ passport, User: { makeUser, validateUser }, datab
     userEdit
   });
   
-  function isNotAuth(req: Request, res: Response, next: NextFunction) {
+  async function isNotAuth(req: Request, res: Response, next: NextFunction) {
     console.log('NOT authenticated');
+    console.log(await readUser({ email: 'asd@ateaacst.com' }));
     req.isUnauthenticated() ? next() : res.redirect('/');
-    
   }
   
-  function isAuth(req: Request, res: Response, next: NextFunction) {
+  async function isAuth(req: Request, res: Response, next: NextFunction) {
     console.log('authenticated');
     req.isAuthenticated() ? next() : res.redirect('/login');
   }
   
-  async function userRegister(req: Request, res: Response, next: NextFunction) {
+  async function userRegister({ body: { email, password } }: Request, res: Response, next: NextFunction) {
     /*============================================================================
       #Data - Input
         - User = email, passsword, user_access_level?, company_id? employee_id?
@@ -62,15 +54,16 @@ function makeUserControllers({ passport, User: { makeUser, validateUser }, datab
       2. System saves data
       3. System send out request for email confirmation
     ==============================================================================*/
-    /* try {
-       const user = makeUser(req.body.parts);
-       User.checkUser(user);
-       database.checkDuplicates(user);
-       database.storeUser(user);
-       mailer.sendEmailConfirmation(user);
-     } catch (err) {
-       res.status(400).send(err);
-     }*/
+    try {
+      // @ts-ignore
+      const User = makeUser({ email, password });
+      /*
+      database.checkDuplicates(user);
+      database.storeUser(user);
+      mailer.sendEmailConfirmation(user);*/
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
   
   async function userConfirmAccount(req: Request, res: Response, next: NextFunction) {
@@ -114,4 +107,4 @@ export const {
   userEdit,
   userForgotPassword,
   userConfirmAccount
-} = makeUserControllers({ passport, User });
+} = makeUserControllers({ passport, makeUser });
