@@ -97,7 +97,6 @@ server.post('/register', checkNotAuthenticated, async (req, res) => {
 server.post('/reset-password', checkNotAuthenticated, async (req, res, next) => {
   try {
     console.log(req.body.resetEmail);
-    
     let transporter = nodemailer.createTransport({
       host: 'smtp.tellmann.co.za',
       port: 587,
@@ -117,12 +116,11 @@ server.post('/reset-password', checkNotAuthenticated, async (req, res, next) => 
       to: 'felix@burgerexchange.co.za', // list of receivers
       subject: 'Hello', // Subject line
       text: 'Hello world?', // plain text body
-      html: '<b>Hello world?</b>', // html body
+      html: `Hello, <br> Please Click on the link to verify your email.<br><a href="">Click here to verify</a>`, // html body
     });
     res.send(info);
-    
   } catch (err) {
-    res.send(err);
+    throw new err;
   }
 });
 

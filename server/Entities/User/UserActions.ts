@@ -1,22 +1,21 @@
+import * as dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
-import bcrypt from 'bcrypt';
-import makeUser from './User';
-import nodemailer from 'nodemailer';
+import * as bcrypt from 'bcrypt';
 import { readUser, createUser, updateUser, deleteUser } from './UserDatabaseActions';
+import { sendEmailConfirmation } from './UserMailerActions';
+import { Strategy } from 'passport-local';
 
 
-import * as passport from 'passport';
-
-interface userMethodDependencies {
+interface makeUserActions {
   passport?,
   makeUser?: any,
   database?,
   mailer?
 }
 
-
-function makeUserControllers({ passport, makeUser, database, mailer }: userMethodDependencies) {
+function makeUserActions({ passport, makeUser}: makeUserActions) {
   return Object.freeze({
+    initialzeAuthentication,
     isNotAuth,
     isAuth,
     userRegister,
@@ -25,12 +24,11 @@ function makeUserControllers({ passport, makeUser, database, mailer }: userMetho
     userLogout,
     userForgotPassword,
     userDetail,
-    userEdit
+    userEdit,
   });
   
   async function isNotAuth(req: Request, res: Response, next: NextFunction) {
     console.log('NOT authenticated');
-    console.log(await readUser({ email: 'asd@ateaacst.com' }));
     req.isUnauthenticated() ? next() : res.redirect('/');
   }
   
@@ -40,43 +38,33 @@ function makeUserControllers({ passport, makeUser, database, mailer }: userMetho
   }
   
   async function userRegister({ body: { email, password } }: Request, res: Response, next: NextFunction) {
-    /*============================================================================
-      #Data - Input
-        - User = email, passsword, user_access_level?, company_id? employee_id?
-        - User model with minimum information
-      #Data - Output
-        - User model with all information (some taken as default if not given)
-          - activation_status: false
-          - email_token & valid_until - 2 days?
-          - Generated Link to activate email address
-          
-      1. System validates data
-      2. System saves data
-      3. System send out request for email confirmation
-    ==============================================================================*/
     try {
-      // @ts-ignore
-      const User = makeUser({ email, password });
-      /*
-      database.checkDuplicates(user);
-      database.storeUser(user);
-      mailer.sendEmailConfirmation(user);*/
+      const data = {
+        password: await bcrypt.hash(password, 10),
+        email_activation_token: encodeURI(await bcrypt.hash(email, 4)),
+        is_activated: false,
+        email
+      };
+      await createUser(makeUser(data).getUser());
+      await sendEmailConfirmation(data, process.env.URL);
+      res.redirect('/user/login');
     } catch (err) {
       res.status(400).send(err);
     }
   }
   
-  async function userConfirmAccount(req: Request, res: Response, next: NextFunction) {
+  async function userConfirmAccount({ params: { email_activation_token } }: Request, res: Response, next: NextFunction) {
     try {
-      database.validateUser(req.params.email_confirmation_token);
-      res.redirect('/login');
+      const data = makeUser(await readUser({ email_activation_token })).getUser();
+      await updateUser({ email: data.email }, { ...data, is_activated: true, email_activation_token: null });
+      res.redirect('/user/login');
     } catch (err) {
-      res.status(400).send(err.message);
+      res.status(400).send(err);
     }
   }
   
-  function userLogin() {
-    return true;
+  async function userLogin() {
+    return true
   }
   
   function userLogout(req: Request, res: Response, next: NextFunction) {
@@ -95,16 +83,31 @@ function makeUserControllers({ passport, makeUser, database, mailer }: userMetho
   function userEdit() {
     return true;
   }
+  
+  function initialzeAuthentication() {
+    passport.use('local', new Strategy({
+        usernameField: 'email',
+        passwordField: 'password'
+      }, async (email, password, done) => {
+        try {
+          console.log('asd');
+          const user = makeUser(await readUser({ email })).getUser();
+          console.log(user);
+          if (await bcrypt.compare(password, user.password) && user.is_activated) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: 'passsword incorrect or email not confirmed' });
+          }
+        } catch (err) {
+          return done(err);
+        }
+      })
+    );
+    
+    passport.serializeUser((user, done) => done(null, user.email));
+    passport.deserializeUser(async (email, done) => done(null, makeUser(await readUser({ email })).getUser()));
+    return passport;
+  }
 }
 
-export const {
-  isNotAuth,
-  isAuth,
-  userRegister,
-  userLogin,
-  userLogout,
-  userDetail,
-  userEdit,
-  userForgotPassword,
-  userConfirmAccount
-} = makeUserControllers({ passport, makeUser });
+export default makeUserActions;

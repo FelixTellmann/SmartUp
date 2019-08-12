@@ -19,15 +19,15 @@ function loadDependencies(validator) {
     {
       email,
       password,
-      employee_id = 0,
-      company_id = 0,
-      user_role_id = 0,
-      create_at = Date.now(),
-      modified_at = Date.now(),
-      is_activated = false,
-      email_activation_token,
-      reset_token,
-      reset_token_valid_until
+      employee_id,
+      company_id,
+      user_role_id,
+      created_at = new Date(),
+      modified_at = new Date(),
+      is_activated = 0,
+      email_activation_token = null,
+      reset_token = null,
+      reset_token_valid_until = null
     }) {
     if (!validator.isEmail(email)) {
       throw new Error(`${email} is not a valid Email Address.`);
@@ -38,12 +38,27 @@ function loadDependencies(validator) {
       getEmployeeId: () => employee_id,
       getCompanyId: () => company_id,
       getUserRoleId: () => user_role_id,
-      getCreatedAt: () => create_at,
+      getCreatedAt: () => created_at,
       getModifiedAt: () => modified_at,
       getIsActivated: () => is_activated,
       getEmailActivationToken: () => email_activation_token,
       GetResetToken: () => reset_token,
-      GetIsValidResetToken: () => reset_token_valid_until
+      GetIsValidResetToken: () => reset_token_valid_until,
+      getUser: () => {
+        return {
+          email,
+          password,
+          employee_id,
+          company_id,
+          user_role_id,
+          created_at,
+          modified_at,
+          is_activated,
+          email_activation_token,
+          reset_token,
+          reset_token_valid_until
+        };
+      }
     });
   };
 }
