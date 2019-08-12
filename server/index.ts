@@ -2,11 +2,9 @@ import next from 'next';
 import express from 'express';
 import bodyParser from 'body-parser';
 import Database, { session } from './Database/database';
-import passport from 'passport';
-import makeUser from './Entities/User/User';
+import bcrypt from 'bcrypt';
 import userRoutes from './Entities/User/UserRoutes';
-import makeUserActions from './Entities/User/UserActions';
-const userActions = makeUserActions({ passport, makeUser });
+import { initialzeAuthentication } from './Entities/User/UserActions';
 
 
 const port = parseInt(process.env.PORT || '3000', 10);
@@ -23,7 +21,7 @@ app.prepare().then(() => {
   server.set('views', __dirname + '/views');
   server.set('view-engine', 'twig');
   server.use(express.urlencoded({ extended: false }));
-  userActions.initialzeAuthentication();
+  const passport = initialzeAuthentication();
   server.use(passport.initialize());
   server.use(passport.session());
   
@@ -32,7 +30,7 @@ app.prepare().then(() => {
   });
   
   /*================ Routes ================*/
-  server.use(userRoutes(next_ViewProvider, passport, userActions));
+  server.use(userRoutes(next_ViewProvider, passport));
   
   server.get('*', (req, res) => {
     return next_ViewProvider(req, res); // for all the react stuff

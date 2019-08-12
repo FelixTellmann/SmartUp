@@ -1,19 +1,18 @@
 import { Router } from 'express';
+import {
+  isNotAuth,
+  isAuth,
+  userRegister,
+  userConfirmAccount,
+  userLogin,
+  userLogout,
+  userDetail,
+  userEdit,
+  userForgotPassword
+} from './UserActions';
 
 
-export default function makeRoutes(viewProvider, passport, userActions) {
-  const {
-    isNotAuth,
-    isAuth,
-    userRegister,
-    userConfirmAccount,
-    userLogin,
-    userLogout,
-    userDetail,
-    userEdit,
-    userForgotPassword
-  } = userActions;
-  
+export default function makeRoutes(viewProvider, passport) {
   const router = Router();
   /*================ Accessible when not logged in ================*/
   router.get('/user/register', isNotAuth, (req, res) => res.render('userRegister.twig'));

@@ -1,8 +1,10 @@
 import * as dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import * as bcrypt from 'bcrypt';
+import makeUser from './User';
 import { readUser, createUser, updateUser, deleteUser } from './UserDatabaseActions';
 import { sendEmailConfirmation } from './UserMailerActions';
+import passport from 'passport';
 import { Strategy } from 'passport-local';
 
 
@@ -13,7 +15,7 @@ interface makeUserActions {
   mailer?
 }
 
-function makeUserActions({ passport, makeUser}: makeUserActions) {
+function makeUserActions({ passport, makeUser, database, mailer }: makeUserActions) {
   return Object.freeze({
     initialzeAuthentication,
     isNotAuth,
@@ -24,17 +26,17 @@ function makeUserActions({ passport, makeUser}: makeUserActions) {
     userLogout,
     userForgotPassword,
     userDetail,
-    userEdit,
+    userEdit
   });
   
   async function isNotAuth(req: Request, res: Response, next: NextFunction) {
-    console.log('NOT authenticated');
+    console.log('NOT authenticated?');
     req.isUnauthenticated() ? next() : res.redirect('/');
   }
   
   async function isAuth(req: Request, res: Response, next: NextFunction) {
-    console.log('authenticated');
-    req.isAuthenticated() ? next() : res.redirect('/login');
+    console.log('authenticated?');
+    req.isAuthenticated() ? next() : res.redirect('/user/login');
   }
   
   async function userRegister({ body: { email, password } }: Request, res: Response, next: NextFunction) {
@@ -63,8 +65,12 @@ function makeUserActions({ passport, makeUser}: makeUserActions) {
     }
   }
   
-  async function userLogin() {
-    return true
+  function userLogin(req: Request, res: Response, next: NextFunction) {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/user/login',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    });
   }
   
   function userLogout(req: Request, res: Response, next: NextFunction) {
@@ -108,6 +114,18 @@ function makeUserActions({ passport, makeUser}: makeUserActions) {
     passport.deserializeUser(async (email, done) => done(null, makeUser(await readUser({ email })).getUser()));
     return passport;
   }
+  
 }
 
-export default makeUserActions;
+export const {
+  initialzeAuthentication,
+  isNotAuth,
+  isAuth,
+  userRegister,
+  userLogin,
+  userLogout,
+  userDetail,
+  userEdit,
+  userForgotPassword,
+  userConfirmAccount
+} = makeUserActions({ passport, makeUser });
