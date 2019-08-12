@@ -29,7 +29,10 @@ export default function makeRoutes(viewProvider, passport) {
   
   /*================ Accessible when logged in ================*/
   router.get('/user/:id', isAuth, userDetail);
-  router.get('/user/logout', isAuth, userLogout);
+  router.get('/user/logout', isAuth, (req, res) => {
+    req.logout();
+    res.redirect('/user/login');
+  });
   router.get('/user/:id/edit', isAuth, (req, res) => res.render('userEdit.twig'));
   router.post('/user/:id/edit', isAuth, userEdit);
   

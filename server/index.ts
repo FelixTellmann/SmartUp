@@ -16,14 +16,19 @@ const next_ViewProvider = app.getRequestHandler();
 app.prepare().then(() => {
   // express code here
   const server = express();
+  const passport = initialzeAuthentication();
   server.use(bodyParser.json());
-  server.use(session);
   server.set('views', __dirname + '/views');
   server.set('view-engine', 'twig');
   server.use(express.urlencoded({ extended: false }));
-  const passport = initialzeAuthentication();
+  server.use(session);
   server.use(passport.initialize());
   server.use(passport.session());
+  
+  server.get('/user/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
   
   server.get('/', (_req, res) => {
     res.render('index.twig');

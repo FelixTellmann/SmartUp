@@ -75,7 +75,7 @@ function makeUserActions({ passport, makeUser, database, mailer }: makeUserActio
   
   function userLogout(req: Request, res: Response, next: NextFunction) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/user/login');
   }
   
   function userForgotPassword() {
