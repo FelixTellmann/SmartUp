@@ -2,7 +2,7 @@
 {% if messages.error %}
   {{ messages.error }}
 {% endif %}
-<form action="/user/login" method="post">
+<form action="/login" method="post">
   <div>
     <label for="email">Email</label>
     <input type="email" id="email" name="email" require="required" autocomplete="disabled">
@@ -13,9 +13,9 @@
   </div>
   <button type="submit">Login</button>
 </form>
-<a href="/user/register">Register</a>
+<a href="/register">Register</a>
 
-<form action="/user/reset-password" method="post">
+<form action="/reset-password" method="post">
   <div>
     <label for="resetEmail">Email</label>
     <input type="email" id="resetEmail" name="resetEmail">

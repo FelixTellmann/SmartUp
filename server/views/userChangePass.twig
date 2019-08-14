@@ -1,0 +1,23 @@
+<h1>Change password</h1>
+
+<form action="/user/changePass" method="post">
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email">
+  </div>
+  {% if validResetToken %}
+    <div>
+      <label for="currentPassword">Current Password</label>
+      <input type="password" id="currentPassword" name="currentPassword">
+    </div>
+  {% endif %}
+  <div>
+    <label for="newPassword">New Password</label>
+    <input type="password" id="newPassword" name="newPassword">
+  </div>
+  <div>
+    <label for="confirmNewPassword">Confirm New Password</label>
+    <input type="password" id="confirmNewPassword" name="confirmNewPassword">
+  </div>
+  <button type="submit">Change Password</button>
+</form>

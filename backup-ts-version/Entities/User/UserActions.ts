@@ -114,7 +114,6 @@ function makeUserActions({ passport, makeUser, database, mailer }: makeUserActio
     passport.deserializeUser(async (email, done) => done(null, makeUser(await readUser({ email })).getUser()));
     return passport;
   }
-  
 }
 
 export const {
