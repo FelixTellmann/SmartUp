@@ -1,8 +1,8 @@
-import validator from 'validator';
+import validator from '../validation';
 
 export default class User {
-  constructor(data) {
-    const defaultValues = {
+  constructor(data = {}, update = false) {
+    const defaults = {
       email: '',
       password: '',
       employee_id: null,
@@ -19,7 +19,18 @@ export default class User {
     if (!validator.isEmail(data.email)) {
       throw new Error(`${data.email} is not a valid Email Address.`);
     }
+  
+    if (update) {
+      delete defaults.created_at;
+    }
     
-    Object.assign(this, { ...defaultValues, ...data, modified_at: new Date() });
+    Object.assign(this, { ...defaults, ...data, modified_at: new Date() });
   }
+  
+  static apiURI() { return 'user';}
+  
+  static apiDatabaseTable() { return 'users';}
+  
+  static apiDatabaseId() { return 'user_id';}
+  
 }

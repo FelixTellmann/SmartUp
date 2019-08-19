@@ -1,6 +1,6 @@
 import db from '../database';
 
-class UserDatabase {
+class Database {
   constructor(db) {
     this.db = db;
   }
@@ -28,4 +28,4 @@ class UserDatabase {
   }
 }
 
-export default new UserDatabase(db);
+export default new Database(db);

@@ -74,7 +74,6 @@ server.post('/changePass', async (req, res) => {
   } catch (err) {
     return res.send(err);
   }
-  console.log(users);
 });
 
 server.post('/register', checkNotAuthenticated, async (req, res) => {
@@ -91,12 +90,10 @@ server.post('/register', checkNotAuthenticated, async (req, res) => {
   } catch {
     res.status(400).redirect('/register');
   }
-  console.log(users);
 });
 
 server.post('/reset-password', checkNotAuthenticated, async (req, res, next) => {
   try {
-    console.log(req.body.resetEmail);
     let transporter = nodemailer.createTransport({
       host: 'smtp.tellmann.co.za',
       port: 587,

@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-export default class ConversionMasterUnit {
+export default class RecipeInstruction {
   constructor(data) {
     const defaultValues = {
       name: '',

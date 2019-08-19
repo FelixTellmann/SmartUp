@@ -11,7 +11,6 @@ export default function makeRegister({ User, Mailer, db, bcrypt }) {
       await Mailer.sendEmailConfirmation(user);
       res.redirect('/user/login');
     } catch (err) {
-      console.log(err);
       res.status(400).send(err.message);
     }
   };

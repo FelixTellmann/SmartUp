@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import bcrypt from 'bcrypt';
 import User from './User';
-import db from './UserDatabase';
+import db from './database';
 import Mailer from './UserMailer';
 import {
   isAuth,
@@ -14,6 +14,8 @@ import {
   makeChangePasswordWithResetToken,
   initiateAuthentication,
 } from './actions/';
+
+export { isAuth, isNotAuth };
 
 export default function ({ passport }) {
   initiateAuthentication({ passport, bcrypt, User, db });
@@ -43,6 +45,7 @@ export default function ({ passport }) {
   router.get('/user/logout', isAuth, logout);
   /*router.get('/user/:id/edit', isAuth, (req, res) => res.render('userEdit.twig'));
   router.post('/user/:id/edit', isAuth, userEdit);
+  router.post('/user/:id/delete', isAuth, userEdit);
   
   // testing to add views via next - handle() to provide access to the next level io
   router.get('/test', (req, res) => viewProvider(req, res));*/

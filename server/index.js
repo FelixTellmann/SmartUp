@@ -1,5 +1,6 @@
 import next from 'next';
 import User from './User';
+import Api from './Api';
 import passport from 'passport';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -22,6 +23,7 @@ app.prepare().then(() => {
   
   /*================ User Routes ================*/
   server.use(User({ passport }));
+  server.use(Api());
   server.get('/user/logout', (req, res) => {
     req.logout();
     res.redirect('/asd');
