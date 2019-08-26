@@ -6,4 +6,5 @@ export { default as makeLogin } from './login';
 export { default as makeCreateResetToken } from './createResetToken';
 export { default as makeChangePasswordWithResetToken } from './changePasswordWithResetToken';
 export { default as initiateAuthentication } from './initiateAuthentication';
+export { default as makeGetDetail } from './GetDetail';
 

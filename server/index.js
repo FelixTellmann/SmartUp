@@ -21,19 +21,15 @@ app.prepare().then(() => {
   server.use(passport.initialize());
   server.use(passport.session());
   
-  /*================ User Routes ================*/
+  /*================ API Routes ================*/
   server.use(User({ passport }));
   server.use(Api());
-  server.get('/user/logout', (req, res) => {
-    req.logout();
-    res.redirect('/asd');
-  });
   
-  server.get('/', (_req, res) => {
+  /*server.get('/', (_req, res) => {
     res.render('index.twig');
-  });
+  });*/
   
-  /*================ Routes ================*/
+  /*================ Next js ================*/
   server.get('*', (req, res) => {
     return handle(req, res); // for all the react stuff
   });

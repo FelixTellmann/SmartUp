@@ -4,7 +4,15 @@
     "module": "esnext",
     "jsx": "preserve",
     "lib": [
-      "es5","es6","dom","dom.iterable","esnext","es2018","esnext.asynciterable","esnext.array","esnext.symbol"
+      "es5",
+      "es6",
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2018",
+      "esnext.asynciterable",
+      "esnext.array",
+      "esnext.symbol"
     ],
     "baseUrl": ".",
     "moduleResolution": "node",

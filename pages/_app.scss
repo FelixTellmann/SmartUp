@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+*:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body, td, th, input, textarea {
+  font-family: 'Lato', Segoe UI, Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  line-height: 19px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-color: #ebeced;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  background-color: transparent;
+}
+
+a:-webkit-any-link:active {
+  color: grey;
+}
+
+a:-webkit-any-link {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+:focus {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+
+.wrapper {
+  display: block;
+  max-width: 1670px;
+  margin: auto;
+  max-height: 100%;
+  @media (min-width: 768px) {
+    width: 725px;
+  }
+
+  @media (min-width: 992px) {
+    width: 945px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 1145px;
+  }
+
+  @media (min-width: 1300px) {
+    width: 1270px;
+  }
+
+  @media (min-width: 1400px) {
+    width: 1370px;
+  }
+
+  @media (min-width: 1500px) {
+    width: 1470px;
+  }
+
+  @media (min-width: 1700px) {
+    width: 1670px;
+  }
+}

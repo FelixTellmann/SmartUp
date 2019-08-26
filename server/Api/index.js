@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import DatabaseModel from './database';
-import { ConversionMasterUnit, ConversionUnit, InventoryItem } from './Entities';
+import { ConversionMasterUnit, ConversionUnit, InventoryItem, UiNavigation, UiSetting } from './Entities';
 import database from '../database';
 
 export default function () {
@@ -53,6 +53,8 @@ export default function () {
   makeApiRoutes(ConversionMasterUnit);
   makeApiRoutes(ConversionUnit);
   makeApiRoutes(InventoryItem);
+  makeApiRoutes(UiNavigation);
+  makeApiRoutes(UiSetting);
   /*  makeApiRoutes(ConversionUnit);
     makeApiRoutes(InventoryItem);
     makeApiRoutes(InventoryItemType);

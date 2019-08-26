@@ -13,6 +13,7 @@ import {
   makeCreateResetToken,
   makeChangePasswordWithResetToken,
   initiateAuthentication,
+  makeGetDetail,
 } from './actions/';
 
 export { isAuth, isNotAuth };
@@ -24,6 +25,7 @@ export default function ({ passport }) {
   const login = makeLogin({ passport });
   const createResetToken = makeCreateResetToken({ User, Mailer, db, bcrypt });
   const changePasswordWithResetToken = makeChangePasswordWithResetToken({ User, db, bcrypt });
+  const getDetail = makeGetDetail({ User, db });
   const router = Router();
   
   /*================ Accessible when not logged in ================*/
@@ -40,8 +42,8 @@ export default function ({ passport }) {
   
   router.post('/user/changePasswordWithResetToken', isNotAuth, changePasswordWithResetToken);
   
-  /*/!*================ Accessible when logged in ================*!/
-  router.get('/user/:id', isAuth, getDetail);*/
+  /*================ Accessible when logged in ================*/
+  router.get('/user/:id', /*isAuth,*/ getDetail);
   router.get('/user/logout', isAuth, logout);
   /*router.get('/user/:id/edit', isAuth, (req, res) => res.render('userEdit.twig'));
   router.post('/user/:id/edit', isAuth, userEdit);

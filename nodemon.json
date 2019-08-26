@@ -1,5 +1,9 @@
 {
+  "verbose": true,
+  "ignore": ["node_modules",".next"],
   "watch": ["server", "static"],
   "exec": "ts-node --project tsconfig.server.json server/index.js",
-  "ext": "js ts twig"
+  "ext": "js ts twig jsx tsx"
 }
+
+
