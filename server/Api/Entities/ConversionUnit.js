@@ -1,13 +1,27 @@
-import validator from 'validator';
+import validator from '../../validation';
 
 export default class ConversionUnit {
-  constructor(data) {
-    const defaultValues = {
-      name: '',
-      inventory_item_type_id: null,
-      conversion_unit_id: null,
+  constructor(data = {}, update = false) {
+    const defaults = {
+      name: null,
+      conversion_master_unit_id: null,
+      conversion_factor: null,
+      abbreviation: null,
+      created_at: new Date(),
+      modified_at: new Date(),
     };
     
-    Object.assign(this, { ...defaultValues, ...data, modified_at: new Date() });
+    if (update) {
+      delete defaults.created_at;
+    }
+    
+    Object.assign(this, { ...defaults, ...validator.filter(data, defaults), modified_at: new Date() });
   }
+  
+  static apiURI() { return 'conversion_units';}
+  
+  static apiDatabaseTable() { return 'conversion_units';}
+  
+  static apiDatabaseId() { return 'conversion_unit_id';}
+  
 }

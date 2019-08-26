@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import DatabaseModel from './database';
-import ConversionMasterUnit from './Entities/ConversionMasterUnit';
+import { ConversionMasterUnit, ConversionUnit, InventoryItem } from './Entities';
 import database from '../database';
 
 export default function () {
@@ -51,6 +51,8 @@ export default function () {
   }
   
   makeApiRoutes(ConversionMasterUnit);
+  makeApiRoutes(ConversionUnit);
+  makeApiRoutes(InventoryItem);
   /*  makeApiRoutes(ConversionUnit);
     makeApiRoutes(InventoryItem);
     makeApiRoutes(InventoryItemType);
