@@ -30,6 +30,11 @@ app.prepare().then(() => {
   });*/
   
   /*================ Next js ================*/
+  // Redirect any unauthorized pages routes to root
+  server.get(['/components', '/components/*', '/helpers', '/helpers/*'], (req, res) => {
+    res.redirect('/');
+  });
+  
   server.get('*', (req, res) => {
     return handle(req, res); // for all the react stuff
   });

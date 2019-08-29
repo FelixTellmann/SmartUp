@@ -1,0 +1,50 @@
+{% layout none %}
+{% comment %}{# @formatter:off #}{% endcomment %}
+{% assign legacies = 0 %}{% for linklist in linklists %}{% if linklist.handle contains "legacy" %}{% assign legacies = legacies | plus: 1 %}{% endif %}{% endfor %}
+  [{% for linklist in linklists %}{% unless linklist.handle contains "legacy" %}
+    {
+      "handle": "{{ linklist.handle }}",
+      "title": "{{ linklist.title }}",
+      "levels": "{{ linklist.levels }}",
+      "links": [{% if linklist.levels > 0 %}{% for link in linklist.links %}
+        {
+          "handle": "{{ link.handle }}",
+          "active": "{{ link.active }}",
+          "child_active": "{{ link.child_active }}",
+          "current": "{{ link.current }}",
+          "child_current": "{{ link.child_current }}",
+          "levels": "{{ link.levels }}",
+          "links": [{% if link.levels > 0 %}{% for sub_link in link.links %}
+            {
+              "handle": "{{ sub_link.handle }}",
+              "active": "{{ sub_link.active }}",
+              "child_active": "{{ sub_link.child_active }}",
+              "current": "{{ sub_link.current }}",
+              "child_current": "{{ sub_link.child_current }}",
+              "levels": "{{ sub_link.levels }}",
+              "links": [{% if sub_link.levels > 0 %}{% for sub_sub_link in sub_link.links %}
+                {
+                  "handle": "{{ sub_sub_link.handle }}",
+                  "active": "{{ sub_sub_link.active }}",
+                  "child_active": "{{ sub_sub_link.child_active }}",
+                  "current": "{{ sub_sub_link.current }}",
+                  "child_current": "{{ sub_sub_link.child_current }}",
+                  "levels": "{{ sub_sub_link.levels }}",
+                  "links": [{% if sub_sub_link.levels > 0 %}{% for sub_sub_sub_link in sub_sub_link.links %}{% endfor %}{% endif %}],
+                  "object": "{{ sub_sub_link.object }}",
+                  "title": "{{ sub_sub_link.title }}",
+                  "type": "{{ sub_sub_link.type }}",
+                  "url": "{{ sub_sub_link.url }}"
+                }{% unless forloop.last %},{% endunless %}{% endfor %}{% endif %}],
+              "object": "{{ sub_link.object }}",
+              "title": "{{ sub_link.title }}",
+              "type": "{{ sub_link.type }}",
+              "url": "{{ sub_link.url }}"
+            }{% unless forloop.last %},{% endunless %}{% endfor %}{% endif %}],
+          "object": "{{ link.object }}",
+          "title": "{{ link.title }}",
+          "type": "{{ link.type }}",
+          "url": "{{ link.url }}"
+        }{% unless forloop.last %},{% endunless %}{% endfor %}{% endif %}]
+    }{% assign looplength = forloop.length | minus: legacies %}{% if forloop.rindex0 >= looplength %},{% endif %}
+  {% endunless %}{% endfor %}]

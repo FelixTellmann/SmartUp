@@ -1,0 +1,282 @@
+[
+  {
+    "handle": "main-menu",
+    "title": "menu",
+    "levels": "2",
+    "links": [
+      {
+        "handle": "home",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Home",
+        "type": "frontpage_link",
+        "url": "/"
+      },
+      {
+        "handle": "portfolio",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Portfolio",
+        "type": "http_link",
+        "url": "/portfolio/kidsliving"
+      },
+      {
+        "handle": "team",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Team",
+        "type": "http_link",
+        "url": "/team"
+      },
+      {
+        "handle": "career",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Career",
+        "type": "http_link",
+        "url": "/career"
+      },
+      {
+        "handle": "code",
+        "active": "false",
+        "child_active": "true",
+        "current": "false",
+        "child_current": "true",
+        "levels": "1",
+        "links": [
+          {
+            "test": {
+              "handle": "test",
+              "active": "true",
+              "child_active": "false",
+              "current": "true",
+              "child_current": "false",
+              "levels": "0",
+              "links": [],
+              "object": "PageDrop",
+              "title": "Test",
+              "type": "page_link",
+              "url": "/pages/navigation"
+            }
+          }
+        ],
+        "object": "",
+        "title": "Code",
+        "type": "http_link",
+        "url": "/code"
+      },
+      {
+        "handle": "blog",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Blog",
+        "type": "http_link",
+        "url": "/blogs"
+      },
+      {
+        "handle": "contact",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Contact",
+        "type": "http_link",
+        "url": "/contact"
+      },
+      {
+        "handle": "work-with-us",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Work with us",
+        "type": "http_link",
+        "url": "/inquire"
+      }
+    ]
+  },
+  {
+    "handle": "footer",
+    "title": "Footer menu",
+    "levels": "1",
+    "links": [
+      {
+        "handle": "search",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Search",
+        "type": "search_link",
+        "url": "/search"
+      }
+    ]
+  },
+  {
+    "handle": "nav",
+    "title": "nav",
+    "levels": "2",
+    "links": [
+      {
+        "handle": "home",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Home",
+        "type": "http_link",
+        "url": "/"
+      },
+      {
+        "handle": "dashboard",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Dashboard",
+        "type": "http_link",
+        "url": "/dashboard"
+      },
+      {
+        "handle": "orders",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "Orders",
+        "type": "http_link",
+        "url": "/orders"
+      },
+      {
+        "handle": "hr",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "0",
+        "links": [],
+        "object": "",
+        "title": "HR",
+        "type": "http_link",
+        "url": "/hr"
+      },
+      {
+        "handle": "inventory-management",
+        "active": "false",
+        "child_active": "false",
+        "current": "false",
+        "child_current": "false",
+        "levels": "1",
+        "links": [
+          {
+            "inventory-items": {
+              "handle": "inventory-items",
+              "active": "false",
+              "child_active": "false",
+              "current": "false",
+              "child_current": "false",
+              "levels": "0",
+              "links": [],
+              "object": "",
+              "title": "Inventory Items",
+              "type": "http_link",
+              "url": "/inventory/items"
+            }
+          },
+          {
+            "inventory-types": {
+              "handle": "inventory-types",
+              "active": "false",
+              "child_active": "false",
+              "current": "false",
+              "child_current": "false",
+              "levels": "0",
+              "links": [],
+              "object": "",
+              "title": "Inventory Types",
+              "type": "http_link",
+              "url": "/inventory/types"
+            }
+          },
+          {
+            "conversion-units": {
+              "handle": "conversion-units",
+              "active": "false",
+              "child_active": "false",
+              "current": "false",
+              "child_current": "false",
+              "levels": "0",
+              "links": [],
+              "object": "",
+              "title": "Conversion Units",
+              "type": "http_link",
+              "url": "/inventory/units"
+            }
+          },
+          {
+            "suppliers": {
+              "handle": "suppliers",
+              "active": "false",
+              "child_active": "false",
+              "current": "false",
+              "child_current": "false",
+              "levels": "0",
+              "links": [],
+              "object": "",
+              "title": "Suppliers",
+              "type": "http_link",
+              "url": "/inventory/suppliers"
+            }
+          }
+        ],
+        "object": "",
+        "title": "Inventory Management",
+        "type": "http_link",
+        "url": "/inventory"
+      }
+    ]
+  }
+]

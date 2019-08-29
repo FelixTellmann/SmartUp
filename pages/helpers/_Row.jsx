@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function Row({ x, y, direction, wrap, alignContent, padding = 0, height, ...props }) {
+export function Row({ x, y, direction, wrap, alignContent, padding = 0, height, ...props }) {
   const Row = styled.div`
       display: flex;
       flex-wrap: ${wrap};
