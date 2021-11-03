@@ -35,7 +35,7 @@
     "styled-jsx": "^3.2.1",
     "twig": "^1.13.3",
     "url-loader": "^2.1.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
